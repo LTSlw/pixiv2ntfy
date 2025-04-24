@@ -36,6 +36,10 @@ func (i *Illust) Download() ([][]byte, error) {
 	return pics, nil
 }
 
+func (i *Illust) DownloadPage(pageID uint) ([]byte, error) {
+	return download(http.DefaultClient, i.Pages[pageID].URL.String(), "", imageDownloadReferer)
+}
+
 func GetIllust(pid uint64) (*Illust, error) {
 	info, err := getIllustInfo(pid)
 	if err != nil {
