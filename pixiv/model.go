@@ -9,11 +9,17 @@ type Illust struct {
 	ID         uint64
 	Title      string
 	Comment    string
-	URLs       []url.URL
+	Pages      []Page
 	AuthorID   uint64
 	AuthorName string
 	CreateDate time.Time
 	UploadDate time.Time
+}
+
+type Page struct {
+	URL    url.URL
+	Width  uint64
+	Height uint64
 }
 
 type pixivIllustResponse struct {
@@ -237,7 +243,7 @@ type pixivIllustPagesResponse struct {
 			Regular   string `json:"regular"`
 			Original  string `json:"original"`
 		} `json:"urls"`
-		Width  int `json:"width"`
-		Height int `json:"height"`
+		Width  uint64 `json:"width"`
+		Height uint64 `json:"height"`
 	} `json:"body"`
 }

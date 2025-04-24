@@ -37,12 +37,17 @@ func GetIllust(pid uint64) (*Illust, error) {
 		ID:      unwarp(strconv.ParseUint(info.Body.IllustID, 10, 64)),
 		Title:   info.Body.IllustTitle,
 		Comment: info.Body.IllustComment,
-		URLs: func() []url.URL {
-			urls := []url.URL{}
+		Pages: func() []Page {
+			ps := []Page{}
 			for _, p := range pages.Body {
-				urls = append(urls, *unwarp(url.Parse(p.Urls.Original)))
+				page := Page{
+					URL:    *unwarp(url.Parse(p.Urls.Original)),
+					Width:  p.Width,
+					Height: p.Height,
+				}
+				ps = append(ps, page)
 			}
-			return urls
+			return ps
 		}(),
 		AuthorID:   unwarp(strconv.ParseUint(info.Body.UserID, 10, 64)),
 		AuthorName: info.Body.UserName,
