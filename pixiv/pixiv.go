@@ -13,13 +13,23 @@ import (
 
 const illustURL = "https://www.pixiv.net/ajax/illust/%d"
 const illustPagesURL = "https://www.pixiv.net/ajax/illust/%d/pages"
+const imageDownloadReferer = "https://pixiv.net"
 
-func Download(pid uint64) {
+func Download(pid uint64) ([][]byte, error) {
 	illust, err := GetIllust(pid)
 	if err != nil {
-		fmt.Printf("%s", err.Error())
+		return nil, err
 	}
-	fmt.Printf("%v", illust)
+
+	pics := [][]byte{}
+	for _, p := range illust.Pages {
+		pic, err := download(http.DefaultClient, p.URL.String(), "", imageDownloadReferer)
+		if err != nil {
+			return nil, err
+		}
+		pics = append(pics, pic)
+	}
+	return pics, nil
 }
 
 func GetIllust(pid uint64) (*Illust, error) {
@@ -94,6 +104,9 @@ func getIllustPages(pid uint64) (*pixivIllustPagesResponse, error) {
 
 func download(client *http.Client, url, cookie, referer string) ([]byte, error) {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
+	if referer != "" {
+		req.Header.Add("Referer", referer)
+	}
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, err

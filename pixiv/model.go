@@ -93,31 +93,31 @@ type pixivIllustResponse struct {
 			AIType          int    `json:"aiType"`
 			ProfileImageURL string `json:"profileImageUrl,omitempty"`
 		} `json:"userIllusts"`
-		LikeData             bool   `json:"likeData"`
-		Width                int    `json:"width"`
-		Height               int    `json:"height"`
-		PageCount            int    `json:"pageCount"`
-		BookmarkCount        int    `json:"bookmarkCount"`
-		LikeCount            int    `json:"likeCount"`
-		CommentCount         int    `json:"commentCount"`
-		ResponseCount        int    `json:"responseCount"`
-		ViewCount            int    `json:"viewCount"`
-		BookStyle            string `json:"bookStyle"`
-		IsHowto              bool   `json:"isHowto"`
-		IsOriginal           bool   `json:"isOriginal"`
-		ImageResponseOutData []any  `json:"imageResponseOutData"`
-		ImageResponseData    []any  `json:"imageResponseData"`
-		ImageResponseCount   int    `json:"imageResponseCount"`
-		PollData             any    `json:"pollData"`
-		SeriesNavData        any    `json:"seriesNavData"`
-		DescriptionBoothID   any    `json:"descriptionBoothId"`
-		DescriptionYoutubeID any    `json:"descriptionYoutubeId"`
-		ComicPromotion       any    `json:"comicPromotion"`
-		FanboxPromotion      any    `json:"fanboxPromotion"`
-		ContestBanners       []any  `json:"contestBanners"`
-		IsBookmarkable       bool   `json:"isBookmarkable"`
-		BookmarkData         any    `json:"bookmarkData"`
-		ContestData          any    `json:"contestData"`
+		LikeData             bool  `json:"likeData"`
+		Width                int   `json:"width"`
+		Height               int   `json:"height"`
+		PageCount            int   `json:"pageCount"`
+		BookmarkCount        int   `json:"bookmarkCount"`
+		LikeCount            int   `json:"likeCount"`
+		CommentCount         int   `json:"commentCount"`
+		ResponseCount        int   `json:"responseCount"`
+		ViewCount            int   `json:"viewCount"`
+		BookStyle            any   `json:"bookStyle"`
+		IsHowto              bool  `json:"isHowto"`
+		IsOriginal           bool  `json:"isOriginal"`
+		ImageResponseOutData []any `json:"imageResponseOutData"`
+		ImageResponseData    []any `json:"imageResponseData"`
+		ImageResponseCount   int   `json:"imageResponseCount"`
+		PollData             any   `json:"pollData"`
+		SeriesNavData        any   `json:"seriesNavData"`
+		DescriptionBoothID   any   `json:"descriptionBoothId"`
+		DescriptionYoutubeID any   `json:"descriptionYoutubeId"`
+		ComicPromotion       any   `json:"comicPromotion"`
+		FanboxPromotion      any   `json:"fanboxPromotion"`
+		ContestBanners       []any `json:"contestBanners"`
+		IsBookmarkable       bool  `json:"isBookmarkable"`
+		BookmarkData         any   `json:"bookmarkData"`
+		ContestData          any   `json:"contestData"`
 		ZoneConfig           struct {
 			Responsive struct {
 				URL string `json:"url"`

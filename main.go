@@ -1,7 +1,14 @@
 package main
 
-import "github.com/LTSlw/pixiv2ntfy/pixiv"
+import (
+	"os"
+
+	"github.com/LTSlw/pixiv2ntfy/pixiv"
+)
 
 func main() {
-	pixiv.Download(129588621)
+	pics, err := pixiv.Download(129138049)
+	_ = err
+	f, _ := os.Create("/tmp/res")
+	f.Write(pics[0])
 }
