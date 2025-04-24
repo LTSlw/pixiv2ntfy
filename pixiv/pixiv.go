@@ -21,8 +21,12 @@ func Download(pid uint64) ([][]byte, error) {
 		return nil, err
 	}
 
+	return illust.Download()
+}
+
+func (i *Illust) Download() ([][]byte, error) {
 	pics := [][]byte{}
-	for _, p := range illust.Pages {
+	for _, p := range i.Pages {
 		pic, err := download(http.DefaultClient, p.URL.String(), "", imageDownloadReferer)
 		if err != nil {
 			return nil, err
