@@ -121,6 +121,10 @@ func download(client *http.Client, url, cookie, referer string) ([]byte, error) 
 	}
 	defer res.Body.Close()
 
+	if res.StatusCode != http.StatusOK {
+		return nil, errors.New("http response is not status ok")
+	}
+
 	resp, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
