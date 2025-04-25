@@ -3,7 +3,8 @@ package ntfy
 type Priority int
 
 const (
-	PriorityMin Priority = iota + 1
+	PriorityUndefined Priority = iota
+	PriorityMin
 	PriorityLow
 	PriorityDefault
 	PriorityHigh
@@ -13,7 +14,7 @@ const (
 type Message struct {
 	Title       string
 	Message     string
-	Priority    int
+	Priority    Priority
 	Tags        []string
 	Markdown    bool
 	Delay       string
