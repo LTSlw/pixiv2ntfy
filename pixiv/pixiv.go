@@ -14,9 +14,10 @@ import (
 const illustURL = "https://www.pixiv.net/ajax/illust/%d"
 const illustPagesURL = "https://www.pixiv.net/ajax/illust/%d/pages"
 const imageDownloadReferer = "https://pixiv.net"
+const defaultUserAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/114514.0"
 
-func Download(pid uint64) ([][]byte, error) {
-	illust, err := GetIllust(pid)
+func Download(pid uint64, sessid, ua string) ([][]byte, error) {
+	illust, err := GetIllust(pid, sessid, ua)
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +28,7 @@ func Download(pid uint64) ([][]byte, error) {
 func (i *Illust) Download() ([][]byte, error) {
 	pics := [][]byte{}
 	for _, p := range i.Pages {
-		pic, err := download(http.DefaultClient, p.URL.String(), "", imageDownloadReferer)
+		pic, err := download(http.DefaultClient, p.URL.String(), imageDownloadReferer, "", "")
 		if err != nil {
 			return nil, err
 		}
@@ -37,16 +38,16 @@ func (i *Illust) Download() ([][]byte, error) {
 }
 
 func (i *Illust) DownloadPage(pageID uint) ([]byte, error) {
-	return download(http.DefaultClient, i.Pages[pageID].URL.String(), "", imageDownloadReferer)
+	return download(http.DefaultClient, i.Pages[pageID].URL.String(), imageDownloadReferer, "", "")
 }
 
-func GetIllust(pid uint64) (*Illust, error) {
-	info, err := getIllustInfo(pid)
+func GetIllust(pid uint64, sessid, ua string) (*Illust, error) {
+	info, err := getIllustInfo(pid, sessid, ua)
 	if err != nil {
 		return nil, err
 	}
 
-	pages, err := getIllustPages(pid)
+	pages, err := getIllustPages(pid, sessid, ua)
 	if err != nil {
 		return nil, err
 	}
@@ -75,8 +76,8 @@ func GetIllust(pid uint64) (*Illust, error) {
 	return illust, nil
 }
 
-func getIllustInfo(pid uint64) (*pixivIllustResponse, error) {
-	raw, err := download(http.DefaultClient, fmt.Sprintf(illustURL, pid), "", "")
+func getIllustInfo(pid uint64, sessid, ua string) (*pixivIllustResponse, error) {
+	raw, err := download(http.DefaultClient, fmt.Sprintf(illustURL, pid), "", sessid, ua)
 	if err != nil {
 		return nil, err
 	}
@@ -93,8 +94,8 @@ func getIllustInfo(pid uint64) (*pixivIllustResponse, error) {
 	return resp, nil
 }
 
-func getIllustPages(pid uint64) (*pixivIllustPagesResponse, error) {
-	raw, err := download(http.DefaultClient, fmt.Sprintf(illustPagesURL, pid), "", "")
+func getIllustPages(pid uint64, sessid, ua string) (*pixivIllustPagesResponse, error) {
+	raw, err := download(http.DefaultClient, fmt.Sprintf(illustPagesURL, pid), "", sessid, ua)
 	if err != nil {
 		return nil, err
 	}
@@ -110,8 +111,21 @@ func getIllustPages(pid uint64) (*pixivIllustPagesResponse, error) {
 	return resp, nil
 }
 
-func download(client *http.Client, url, cookie, referer string) ([]byte, error) {
+func download(client *http.Client, url, referer, sessid, ua string) ([]byte, error) {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
+	if sessid != "" {
+		c := &http.Cookie{
+			Name:  "PHPSESSID",
+			Value: sessid,
+		}
+		req.AddCookie(c)
+		if ua == "" {
+			req.Header.Add("User-Agent", defaultUserAgent)
+		}
+	}
+	if ua != "" {
+		req.Header.Add("User-Agent", ua)
+	}
 	if referer != "" {
 		req.Header.Add("Referer", referer)
 	}

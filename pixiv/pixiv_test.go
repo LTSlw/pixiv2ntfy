@@ -8,14 +8,14 @@ import (
 )
 
 func TestDownload(t *testing.T) {
-	_, err := pixiv.Download_(http.DefaultClient, "https://pixiv.net", "", "")
+	_, err := pixiv.Download_(http.DefaultClient, "https://pixiv.net", "", "", "")
 	if err != nil {
 		t.Error(err.Error())
 	}
 }
 
 func TestGetIllustPages(t *testing.T) {
-	pages, err := pixiv.GetIllustPages(129138049)
+	pages, err := pixiv.GetIllustPages(129138049, "", "")
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -25,7 +25,7 @@ func TestGetIllustPages(t *testing.T) {
 }
 
 func TestGetIllustInfo(t *testing.T) {
-	info, err := pixiv.GetIllustInfo(129138049)
+	info, err := pixiv.GetIllustInfo(129138049, "", "")
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -35,7 +35,7 @@ func TestGetIllustInfo(t *testing.T) {
 }
 
 func TestGetIllust(t *testing.T) {
-	illust, err := pixiv.GetIllust(129138049)
+	illust, err := pixiv.GetIllust(129138049, "", "")
 	if err != nil {
 		t.Error(err.Error())
 	}

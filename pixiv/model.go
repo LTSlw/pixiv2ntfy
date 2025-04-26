@@ -152,12 +152,9 @@ type pixivIllustResponse struct {
 				Title              string `json:"title"`
 				Description        string `json:"description"`
 				Canonical          string `json:"canonical"`
-				AlternateLanguages struct {
-					Ja string `json:"ja"`
-					En string `json:"en"`
-				} `json:"alternateLanguages"`
-				DescriptionHeader string `json:"descriptionHeader"`
-				Ogp               struct {
+				AlternateLanguages any    `json:"alternateLanguages"`
+				DescriptionHeader  string `json:"descriptionHeader"`
+				Ogp                struct {
 					Description string `json:"description"`
 					Image       string `json:"image"`
 					Title       string `json:"title"`

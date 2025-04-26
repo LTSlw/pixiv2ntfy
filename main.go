@@ -8,9 +8,10 @@ import (
 )
 
 func main() {
-	pics, err := pixiv.Download(126150365)
+	pics, err := pixiv.Download(127826168, "", "")
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
 	msg := &ntfy.Message{
 		Title: "Pictures Today",
