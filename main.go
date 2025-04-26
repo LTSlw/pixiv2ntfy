@@ -16,5 +16,8 @@ func main() {
 		Title: "Pictures Today",
 		File:  pics[0],
 	}
-	ntfy.Publish("", "pixiv2ntfy-test", *msg, nil, nil)
+	err = ntfy.Publish("", "pixiv2ntfy-test", *msg, nil, nil)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }

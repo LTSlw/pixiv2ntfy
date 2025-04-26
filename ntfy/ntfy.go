@@ -100,5 +100,9 @@ func Publish(server string, topic string, msg Message, auth Auth, client *http.C
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("publish failed")
+	}
+
 	return nil
 }
